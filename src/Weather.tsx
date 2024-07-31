@@ -49,15 +49,24 @@ interface WeatherData {
   };
 }
 
+interface WeatherProps {
+  location: string;
+  // loading: boolean;
+  // setLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // const Weather: React.FC = ({location:string}): React.ReactElement => {
-  const Weather: React.FC = (): React.ReactElement => {
+  // const Weather: React.FC = (): React.ReactElement => {
+const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
+  console.log('In wethaer loc has: '+ location);
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
   useEffect(() => {
+    console.log('In wethaer loc has IN USEEFFECT: '+ location);
     const fetchWeather = async () => {
-      fetch(`https://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=Lahore&days=1&aqi=no&alerts=no`)
+      fetch(`https://api.weatherapi.com/v1/forecast.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=${location}&days=1&aqi=no&alerts=no`)
         .then((response) => {
           if (!response.ok) {
             throw new Error('Network response was not ok');
@@ -76,7 +85,8 @@ interface WeatherData {
     };
 
     fetchWeather();
-  }, []);
+  // }, [loading]);
+}, [location]);
 
   if (loading) {
     return <div>Loading...</div>;

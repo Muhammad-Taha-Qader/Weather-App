@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import Weather from './Weather';
+import App from './App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -29,7 +29,8 @@ root.render(
   <React.StrictMode>
     <h2>Weather App</h2>
     {/* <Weather location={} /> */}
-    <Weather/>
+    {/* <Weather/> */}
+    <App/>
   </React.StrictMode>
 );
 
