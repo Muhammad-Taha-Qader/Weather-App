@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Weather from './Weather';
 import Location from './Location';
-
-
 const App: React.FC = (): React.ReactElement => {
     // const [selectedLoc, setSelectedLoc]=useState('Lahore');
     const [selectedLoc, setSelectedLoc]=useState('Lahore');
@@ -16,8 +14,7 @@ const App: React.FC = (): React.ReactElement => {
     }
     
     return (
-        <div id="myResult" className='ml-14 mt-32'>
-            <p>App</p>
+        <div>
             <Location onTogal={handleChange}/>
             {/* <Weather location={`${selectedLoc}`}/> */}
             {/* <Weather location={`${selectedLoc}`} loading={loading} setLoading={setLoading}/> */}
