@@ -181,8 +181,8 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
   }
 
   return (
-    <div id="myResult" className='ml-14 mt-32'>
-      <h1>Weather in {weather?.location.name}, {weather?.location.region}</h1>
+    <div className='mt-6 flex items-center flex-col'>
+      <h1> {weather?.location.name}, {weather?.location.region}</h1>
       <p>Country: {weather?.location.country}</p>
       <p>Temperature: {weather?.current.temp_c}°C / {weather?.current.temp_f}°F</p>
       <p>Condition: {weather?.current.condition.text}</p>
@@ -190,13 +190,15 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
       <p>Humidity: {weather?.current.humidity}%</p>
       <p>Feels Like: {weather?.current.feelslike_c}°C / {weather?.current.feelslike_f}°F</p>
       <img src={`https:${weather?.current.condition.icon}`} alt={weather?.current.condition.text} />
-      <p>Day 1 {weather?.forecast.forecastday[0].date} avg: {weather?.forecast.forecastday[0].day.avgtemp_c} </p>
-      <img src={`https:${weather?.forecast.forecastday[0].day.condition.icon}`} alt="" />
-      <p>Day 2 avg: {weather?.forecast.forecastday[1].day.avgtemp_c}</p>
-      <img src={`https:${weather?.forecast.forecastday[1].day.condition.icon}`} alt="" />
+      <div className='flex bg-slate-500 gap-y-4'>
+        <p>Day 1 {weather?.forecast.forecastday[0].date} avg: {weather?.forecast.forecastday[0].day.avgtemp_c} </p>
+        <img src={`https:${weather?.forecast.forecastday[0].day.condition.icon}`} alt="" />
+        <p>Day 2 avg: {weather?.forecast.forecastday[1].day.avgtemp_c}</p>
+        <img src={`https:${weather?.forecast.forecastday[1].day.condition.icon}`} alt="" />
 
-      <p>Day 3 avg: {weather?.forecast.forecastday[2].day.avgtemp_c}</p>
-      <img src={`https:${weather?.forecast.forecastday[2].day.condition.icon}`} alt="" />
+        <p>Day 3 avg: {weather?.forecast.forecastday[2].day.avgtemp_c}</p>
+        <img src={`https:${weather?.forecast.forecastday[2].day.condition.icon}`} alt="" />
+      </div>
 
     </div>
   );

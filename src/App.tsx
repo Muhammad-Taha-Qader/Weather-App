@@ -14,8 +14,7 @@ const App: React.FC = (): React.ReactElement => {
     }
     
     return (
-        <div id="myResult" className='ml-14 mt-32'>
-            <p>App</p>
+        <div>
             <Location onTogal={handleChange}/>
             {/* <Weather location={`${selectedLoc}`}/> */}
             {/* <Weather location={`${selectedLoc}`} loading={loading} setLoading={setLoading}/> */}
