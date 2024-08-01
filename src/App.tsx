@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import Weather from './Weather';
 import Location from './Location';
-
-
 const App: React.FC = (): React.ReactElement => {
     // const [selectedLoc, setSelectedLoc]=useState('Lahore');
     const [selectedLoc, setSelectedLoc]=useState('Lahore');
