@@ -127,9 +127,14 @@ interface Current {
   gust_kph: number;
 }
 
-interface WeatherData {
+interface CurrentForecastWeatherData {
   location: Location;
   current: Current;
+  forecast: Forecast;
+}
+
+interface HistoryData{
+  location: Location;
   forecast: Forecast;
 }
 
@@ -143,7 +148,8 @@ interface WeatherProps {
   // const Weather: React.FC = (): React.ReactElement => {
 const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
   console.log('In wethaer loc has: '+ location);
-  const [weather, setWeather] = useState<WeatherData | null>(null);
+  const [curForWeather, setCurForWeather] = useState<CurrentForecastWeatherData | null>(null);
+  const [historyData, setHistoryData] = useState<HistoryData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
 
@@ -157,8 +163,36 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           }
           return response.json();
         })
-        .then((data: WeatherData) => {
-          setWeather(data);
+        .then((data: CurrentForecastWeatherData) => {
+          setCurForWeather(data);
+        })
+        .catch((error: Error) => {
+          setError(error);
+        });
+    };
+
+    fetchWeather();
+
+  // }, [loading]);
+  }, [location]);
+
+  useEffect(()=>{
+    const fetchHistory = async () => {
+      const currentDateStr  = (curForWeather?.current.last_updated.split(' ')[0]) as string; // Extract the date part
+      const currentDate: Date = new Date(currentDateStr);
+      // Calculate one past date
+      const pastDate: Date = new Date(currentDate);
+      pastDate.setDate(currentDate.getDate() - 1);
+      const formattedDate: string = pastDate.toISOString().split('T')[0]; // Format the date as 'yyyy-MM-dd'
+      fetch(`https://api.weatherapi.com/v1/history.json?key=${process.env.REACT_APP_WEATHER_API_KEY}&q=${location}&dt=${formattedDate}`)
+        .then(historyResponse =>{
+          if (!historyResponse.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return historyResponse.json();
+        })
+        .then((historyData:HistoryData )=>{
+          setHistoryData(historyData);
         })
         .catch((error: Error) => {
           setError(error);
@@ -167,10 +201,10 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           setLoading(false);
         });
     };
-
-    fetchWeather();
-  // }, [loading]);
-}, [location]);
+    if(curForWeather){
+      fetchHistory();
+    }
+  }, [curForWeather,location]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -182,22 +216,29 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
 
   return (
     <div className='mt-6 flex items-center flex-col'>
-      <h1> {weather?.location.name}, {weather?.location.region}</h1>
-      <p>Country: {weather?.location.country}</p>
-      <p>Temperature: {weather?.current.temp_c}°C / {weather?.current.temp_f}°F</p>
-      <p>Condition: {weather?.current.condition.text}</p>
-      <p>Wind: {weather?.current.wind_kph} kph ({weather?.current.wind_dir})</p>
-      <p>Humidity: {weather?.current.humidity}%</p>
-      <p>Feels Like: {weather?.current.feelslike_c}°C / {weather?.current.feelslike_f}°F</p>
-      <img src={`https:${weather?.current.condition.icon}`} alt={weather?.current.condition.text} />
+      <h1> {curForWeather?.location.name}, {curForWeather?.location.region}</h1>
+      <p>Country: {curForWeather?.location.country}</p>
+      <p>Temperature: {curForWeather?.current.temp_c}°C / {curForWeather?.current.temp_f}°F</p>
+      <p>Condition: {curForWeather?.current.condition.text}</p>
+      <p>Wind: {curForWeather?.current.wind_kph} kph ({curForWeather?.current.wind_dir})</p>
+      <p>Humidity: {curForWeather?.current.humidity}%</p>
+      <p>Feels Like: {curForWeather?.current.feelslike_c}°C / {curForWeather?.current.feelslike_f}°F</p>
+      <img src={`https:${curForWeather?.current.condition.icon}`} alt={curForWeather?.current.condition.text} />
       <div className='flex bg-slate-500 gap-y-4'>
-        <p>Day 1 {weather?.forecast.forecastday[0].date} avg: {weather?.forecast.forecastday[0].day.avgtemp_c} </p>
-        <img src={`https:${weather?.forecast.forecastday[0].day.condition.icon}`} alt="" />
-        <p>Day 2 avg: {weather?.forecast.forecastday[1].day.avgtemp_c}</p>
-        <img src={`https:${weather?.forecast.forecastday[1].day.condition.icon}`} alt="" />
+        <p>Day 1 {curForWeather?.forecast.forecastday[0].date} avg: {curForWeather?.forecast.forecastday[0].day.avgtemp_c} </p>
+        <img src={`https:${curForWeather?.forecast.forecastday[0].day.condition.icon}`} alt="" />
+        <p>Day 2 avg: {curForWeather?.forecast.forecastday[1].day.avgtemp_c}</p>
+        <img src={`https:${curForWeather?.forecast.forecastday[1].day.condition.icon}`} alt="" />
 
-        <p>Day 3 avg: {weather?.forecast.forecastday[2].day.avgtemp_c}</p>
-        <img src={`https:${weather?.forecast.forecastday[2].day.condition.icon}`} alt="" />
+        <p>Day 3 avg: {curForWeather?.forecast.forecastday[2].day.avgtemp_c}</p>
+        <img src={`https:${curForWeather?.forecast.forecastday[2].day.condition.icon}`} alt="" />
+      </div>
+      <div>
+        <img src={`https:${historyData?.forecast.forecastday[0].day.condition.icon}`} alt={`${historyData?.forecast.forecastday[0].day.condition.text}`} />
+        <p>{historyData?.forecast.forecastday[0].day.condition.text}</p>
+        <p>{historyData?.forecast.forecastday[0].date}</p>
+        <p>{historyData?.forecast.forecastday[0].day.maxtemp_c}</p>
+        <p>{historyData?.forecast.forecastday[0].day.avgtemp_c}</p>
       </div>
 
     </div>
