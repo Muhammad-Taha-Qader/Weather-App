@@ -7,7 +7,7 @@ const Location = ({onTogal})=>{
     <div className='flex justify-center md:justify-end md:mr-8'>
       <div>
         <label htmlFor="loc">Choose a Location:</label>
-        <select name="loc" id="loc" onChange={onTogal} className='text-cyan-500'>
+        <select name="loc" id="loc" onChange={onTogal} className='text-slate-950 rounded-lg ml-3 px-2 mt-3'>
           <option value="Lahore">Lahore</option>
           <option value="Paris">Paris</option>
           <option value="Tokyo">Tokyo</option>

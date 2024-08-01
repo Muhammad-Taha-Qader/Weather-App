@@ -27,7 +27,7 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <h2 className='text-center py-5 bg-slate-900'>Weather App</h2>
+    <h2 className='text-center py-5 bg-slate-900 font-poppins font-bold text-3xl'>Weather App</h2>
     {/* <Weather location={} /> */}
     {/* <Weather/> */}
     <App/>
