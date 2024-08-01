@@ -218,7 +218,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
     <div className='mt-20 flex items-left flex-col'>
       {/* <p>Temperature: {curForWeather?.current.temp_c}°C / {curForWeather?.current.temp_f}°F</p> */}
       
-      <div className='flex justify-between mx-3'>
+      <div className='flex justify-between mx-3 md:mx-44'>
         
         <div className='flex max-w-44'>
           <div>
@@ -237,7 +237,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           <p className=' text-xs'> {curForWeather?.current.condition.text}</p>
         </div>
       </div>
-      <div className='flex flex-row mx-3 text-xs gap-x-4 mt-8 mb-16'>
+      <div className='flex flex-row mx-3 text-xs gap-x-4 mt-8 mb-16 md:mx-44'>
         <div>
           <p>Pressure: {curForWeather?.current.pressure_mb}</p>
           <p>Wind: {curForWeather?.current.wind_kph} kph ({curForWeather?.current.wind_dir})</p>
@@ -248,9 +248,9 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
         </div>
       </div>
 
-      <div className='flex gap-y-4 gap-x-2 flex-wrap px-4'>
+      <div className='flex gap-y-4 gap-x-2 flex-wrap px-4 md:justify-center md:gap-x-5'>
 
-        <div className='flex bg-sky-700 rounded-lg p-2 min-w-40 max-w-40'>
+        <div className='flex bg-sky-700/20 rounded-lg p-2 min-w-40 max-w-40'>
             <div>
               <p className='text-xs'> {historyData?.forecast.forecastday[0].date} </p>
               <div className='flex flex-row'> <p className='font-bold'>  {historyData?.forecast.forecastday[0].day.mintemp_c}/{historyData?.forecast.forecastday[0].day.maxtemp_c}</p> <div className='text-xs'>°C</div> </div>
@@ -259,7 +259,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
             <img className='-mt-4 h-16 w-16'  src={`https:${historyData?.forecast.forecastday[0].day.condition.icon}`} alt={`${historyData?.forecast.forecastday[0].day.condition.text}`}  />  
         </div>
 
-        <div className='flex bg-sky-500 rounded-lg p-2 min-w-40 max-w-40'>
+        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40'>
           <div>
             {/* <p className='text-xs'> {curForWeather?.forecast.forecastday[0].date} </p> */}
             <p className='text-xs'> Today </p>
@@ -269,7 +269,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           <img className='-mt-4 h-16 w-16' src={`https:${curForWeather?.forecast.forecastday[0].day.condition.icon}`} alt="" />  
         </div>
 
-        <div className='flex bg-sky-500 rounded-lg p-2 min-w-40 max-w-40'>
+        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40'>
           <div>
             <p className='text-xs'> {curForWeather?.forecast.forecastday[1].date} </p>
             <div className='flex flex-row'> <p className='font-bold'>  {curForWeather?.forecast.forecastday[1].day.mintemp_c}/{curForWeather?.forecast.forecastday[0].day.maxtemp_c}</p> <div className='text-xs'>°C</div> </div>
@@ -278,7 +278,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           <img className='-mt-4 h-16 w-16' src={`https:${curForWeather?.forecast.forecastday[1].day.condition.icon}`} alt="" />  
         </div>
 
-        <div className='flex bg-sky-500 rounded-lg p-2 min-w-40 max-w-40'>
+        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40'>
           <div>
             <p className='text-xs'> {curForWeather?.forecast.forecastday[2].date} </p>
             <div className='flex flex-row'> <p className='font-bold'>  {curForWeather?.forecast.forecastday[2].day.mintemp_c}/{curForWeather?.forecast.forecastday[0].day.maxtemp_c}</p> <div className='text-xs'>°C</div> </div>
