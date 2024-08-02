@@ -21,7 +21,7 @@ const App: React.FC = (): React.ReactElement => {
         <div>
             <h2 className='text-center py-5 bg-slate-900 font-poppins font-bold text-3xl'>Weather App</h2>
             <nav>
-                <ul>
+                <ul className='flex justify-center gap-x-8'>
                     <li><Link to="/">Home</Link></li>
                     <li><Link to="/about">About</Link></li>
                     <li><Link to="/help">Help</Link></li>
