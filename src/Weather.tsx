@@ -152,6 +152,8 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
   const [historyData, setHistoryData] = useState<HistoryData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<Error | null>(null);
+  const [IsPopUpOpen, setIsPopUpOpen] = useState<boolean>(false);
+  const [selectedCard, setSelectedCard] = useState< HTMLDivElement | null>(null);
 
   useEffect(() => {
     console.log('In wethaer loc has IN USEEFFECT: '+ location);
@@ -214,6 +216,21 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
     return <div>Error: {error.message}</div>;
   }
 
+  const openPopup = (divCard: HTMLDivElement) =>{
+    setSelectedCard(divCard);
+    setIsPopUpOpen (true);
+  };
+
+
+  const closePopup = () =>{
+    setSelectedCard(null);
+    setIsPopUpOpen (false);
+  };
+
+
+
+
+
   return (
     <div className='mt-20 flex items-left flex-col'>
       {/* <p>Temperature: {curForWeather?.current.temp_c}°C / {curForWeather?.current.temp_f}°F</p> */}
@@ -250,7 +267,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
 
       <div className='flex gap-y-4 gap-x-2 flex-wrap px-4 md:justify-center md:gap-x-5'>
 
-        <div className='flex bg-sky-700/20 rounded-lg p-2 min-w-40 max-w-40'>
+        <div className='flex bg-sky-700/20 rounded-lg p-2 min-w-40 max-w-40' onClick={(event) => openPopup(event.currentTarget)}>
             <div>
               <p className='text-xs'> {historyData?.forecast.forecastday[0].date} </p>
               <div className='flex flex-row'> <p className='font-bold'>  {historyData?.forecast.forecastday[0].day.mintemp_c}/{historyData?.forecast.forecastday[0].day.maxtemp_c}</p> <div className='text-xs'>°C</div> </div>
@@ -259,7 +276,9 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
             <img className='-mt-4 h-16 w-16'  src={`https:${historyData?.forecast.forecastday[0].day.condition.icon}`} alt={`${historyData?.forecast.forecastday[0].day.condition.text}`}  />  
         </div>
 
-        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40'>
+        
+
+        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40' onClick={(event) => openPopup(event.currentTarget)} >
           <div>
             {/* <p className='text-xs'> {curForWeather?.forecast.forecastday[0].date} </p> */}
             <p className='text-xs'> Today </p>
@@ -269,7 +288,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           <img className='-mt-4 h-16 w-16' src={`https:${curForWeather?.forecast.forecastday[0].day.condition.icon}`} alt="" />  
         </div>
 
-        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40'>
+        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40' onClick={(event) => openPopup(event.currentTarget)}>
           <div>
             <p className='text-xs'> {curForWeather?.forecast.forecastday[1].date} </p>
             <div className='flex flex-row'> <p className='font-bold'>  {curForWeather?.forecast.forecastday[1].day.mintemp_c}/{curForWeather?.forecast.forecastday[0].day.maxtemp_c}</p> <div className='text-xs'>°C</div> </div>
@@ -278,7 +297,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           <img className='-mt-4 h-16 w-16' src={`https:${curForWeather?.forecast.forecastday[1].day.condition.icon}`} alt="" />  
         </div>
 
-        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40'>
+        <div className='flex bg-sky-500/40 rounded-lg p-2 min-w-40 max-w-40' onClick={(event) => openPopup(event.currentTarget)}>
           <div>
             <p className='text-xs'> {curForWeather?.forecast.forecastday[2].date} </p>
             <div className='flex flex-row'> <p className='font-bold'>  {curForWeather?.forecast.forecastday[2].day.mintemp_c}/{curForWeather?.forecast.forecastday[0].day.maxtemp_c}</p> <div className='text-xs'>°C</div> </div>
@@ -295,6 +314,14 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
         <p>{historyData?.forecast.forecastday[0].day.maxtemp_c}</p>
         <p>{historyData?.forecast.forecastday[0].day.avgtemp_c}</p>
       </div> */}
+
+      
+        {IsPopUpOpen && <div className='bg-slate-700/30 fixed rounded-xl h-[300px] w-[600px] place-self-center	 *:' onClick={closePopup}> 
+            <p>This is a new section</p>
+          </div>
+        }
+
+     
 
     </div>
   );
