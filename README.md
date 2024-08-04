@@ -30,8 +30,7 @@ A simple and robust weather app.
         eslint@8.x, globals, @eslint/js, typescript-eslint, eslint-plugin-react
         √ Would you like to install them now? · No / Yes
         √ Which package manager do you want to use? · npm
-     ```
-    - ```
+
         eslint.config.mjs:
         import globals from 'globals';
         import pluginJs from '@eslint/js';
@@ -83,6 +82,5 @@ A simple and robust weather app.
       @tailwind components;
       @tailwind utilities;
      ```
-
 -  ``` npm install react-router-dom ```
 -  ``` npm install chart.js react-chartjs-2 ```
