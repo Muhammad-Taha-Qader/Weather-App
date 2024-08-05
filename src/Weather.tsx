@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './Weather.css';
+import HourlyGraph from './HourlyGraph';
+
 
 interface Condition {
   text: string;
@@ -127,13 +129,13 @@ interface Current {
   gust_kph: number;
 }
 
-interface CurrentForecastWeatherData {
+export interface CurrentForecastWeatherData {
   location: Location;
   current: Current;
   forecast: Forecast;
 }
 
-interface HistoryData{
+export interface HistoryData{
   location: Location;
   forecast: Forecast;
 }
@@ -154,7 +156,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
   const [error, setError] = useState<Error | null>(null);
   const [IsPopUpOpen, setIsPopUpOpen] = useState<boolean>(false);
   const [selectedCard, setSelectedCard] = useState< {historyOrForecast:string, whichForcastDay:number} | null>(null);
-
+  // let hourlyArray:{tempC:number,icon:string} ;
   useEffect(() => {
     console.log('In wethaer loc has IN USEEFFECT: '+ location);
     const fetchWeather = async () => {
@@ -228,8 +230,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
     setIsPopUpOpen (false);
   };
 
-
-
+  
 
 
   return (
@@ -319,7 +320,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
 
       
       {IsPopUpOpen && (
-        <div className='bg-slate-700/90 fixed rounded-xl h-[300px] w-[600px] place-self-center' onClick={closePopup}>
+        <div className='bg-slate-700/90 fixed rounded-xl h-[400px] w-[800px] place-self-center overflow-y-auto' onClick={closePopup}>
 
           {selectedCard?.historyOrForecast === 'H' ? (
             <div>
@@ -352,6 +353,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
                 <p>Avg Humidity: {historyData?.forecast.forecastday[0].day.avghumidity}%</p>
               </div>
             </div>
+            <HourlyGraph i={0} Weather={historyData!} />
 
 
           </div>
@@ -386,8 +388,12 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
                   <p>Avg Humidity: {curForWeather?.forecast.forecastday[selectedCard!.whichForcastDay-1].day.avghumidity}%</p>
                 </div>
               </div>
-              {curForWeather?.forecast.forecastday[selectedCard!.whichForcastDay-1].hour.map((hourData)=> hourData.temp_c) }
-
+              {/* //Show Hourly GRAPH HERE */}
+              {/* {hourlyArray= curForWeather?.forecast.forecastday[selectedCard!.whichForcastDay - 1].hour.map((hourData) =>  hourData.condition.icon */}
+              {/* )
+              } */}
+              <HourlyGraph i={(selectedCard!.whichForcastDay-1)} Weather={curForWeather!} />
+              {/* <HourlyGraph i={5} curForWeather={curForWeather} /> */}
             </div>
           )}
         </div>
