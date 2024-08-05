@@ -19,12 +19,12 @@ const Contributors: React.FC = () => {
 
   return (
     <div className="contributors">
-      <h2 className='text-center text-xl font-bold'>Contributors</h2>
-      <ul className='flex flex-col gap-y-8 items-center'>
+      <h2 className='text-center text-xl font-bold mb-4'>Contributors</h2>
+      <ul className='flex flex-col gap-y-8 items-start'>
         {contributors.map(contributor => (
           <li key={contributor.id} className='flex items-center'>
-            <img src={contributor.avatar_url} alt={`${contributor.login} avatar`} width="50" height="50" className='rounded-full mr-3'/>
-            <a href={contributor.html_url} target="_blank" rel="noopener noreferrer">
+            <img src={contributor.avatar_url} alt={`${contributor.login} avatar`} width="40" height="40" className='rounded-full mr-3'/>
+            <a href={contributor.html_url} target="_blank" rel="noopener noreferrer" className='text-sm'>
               {contributor.login}
             </a>
           </li>

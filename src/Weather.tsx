@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import './Weather.css';
 import HourlyGraph from './HourlyGraph';
 
 
@@ -142,12 +141,9 @@ export interface HistoryData{
 
 interface WeatherProps {
   location: string;
-  // loading: boolean;
-  // setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // const Weather: React.FC = ({location:string}): React.ReactElement => {
-  // const Weather: React.FC = (): React.ReactElement => {
 const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
   console.log('In wethaer loc has: '+ location);
   const [curForWeather, setCurForWeather] = useState<CurrentForecastWeatherData | null>(null);
@@ -174,9 +170,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
           setError(error);
         });
     };
-
     fetchWeather();
-
   // }, [loading]);
   }, [location]);
 
@@ -208,7 +202,7 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
     if(curForWeather){
       fetchHistory();
     }
-  }, [curForWeather,location]);
+  }, [curForWeather]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -218,7 +212,6 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
     return <div>Error: {error.message}</div>;
   }
 
-  // const openPopup = (divCard: HTMLDivElement) =>{
   const openPopup = (forOrHistory: string, forcastNum:number=0) =>{
     setSelectedCard({historyOrForecast:forOrHistory, whichForcastDay:forcastNum });
     setIsPopUpOpen (true);
@@ -230,15 +223,9 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
     setIsPopUpOpen (false);
   };
 
-  
-
-
   return (
     <div className='mt-20 flex items-left flex-col'>
-      {/* <p>Temperature: {curForWeather?.current.temp_c}°C / {curForWeather?.current.temp_f}°F</p> */}
-      
       <div className='flex justify-between mx-3 md:mx-44' >
-        
         <div className='flex max-w-44'>
           <div>
             <p className='  text-5xl md:text-6xl'> {curForWeather?.current.temp_c}</p>
@@ -280,8 +267,6 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
             <img className='-mt-2 h-12 w-12'  src={`https:${historyData?.forecast.forecastday[0].day.condition.icon}`} alt={`${historyData?.forecast.forecastday[0].day.condition.text}`}  />  
         </div>
 
-        
-
         <div className='flex bg-sky-500/60 rounded-lg p-2 min-w-40 max-w-40' onClick={() => openPopup('F',1)} >
           <div>
             {/* <p className='text-xs'> {curForWeather?.forecast.forecastday[0].date} </p> */}
@@ -321,43 +306,41 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
 
       
       {IsPopUpOpen && (
-        <div className='bg-slate-700 md:bg-slate-950/90 fixed rounded-xl -m-11 h-auto w-[300px]  md:w-[600px] lg:-m-20 place-self-center overflow-y-auto' onClick={closePopup}>
+        <div className='bg-slate-950 md:bg-slate-950/90 fixed rounded-xl -m-11 h-auto w-[300px]  md:w-[600px] lg:-m-20 place-self-center overflow-y-auto' onClick={closePopup}>
 
           {selectedCard?.historyOrForecast === 'H' ? (
             <div>
-            <p className='mx-3 md:mx-16 my-4'>{historyData?.forecast.forecastday[0].date}</p>
+              <p className='mx-3 md:mx-16 my-4'>{historyData?.forecast.forecastday[0].date}</p>
 
-            <div className='flex justify-between mx-3 md:mx-16'>
-              
-              <div className='flex max-w-44'>
+              <div className='flex justify-between mx-3 md:mx-16'>
+                
+                <div className='flex max-w-44'>
+                  <div>
+                    <p className='text-6xl'> {historyData?.forecast.forecastday[0].day.avgtemp_c}</p>
+                    <p> {historyData?.forecast.forecastday[0].day.mintemp_c}/{historyData?.forecast.forecastday[0].day.maxtemp_c}</p>
+                  </div>
+                  <div className='flex flex-col justify-between'>
+                    <p>°C</p>
+                    <p className='mt-auto mb-10 ml-2'>{historyData?.forecast.forecastday[0].day.avgtemp_f}°F</p>
+                  </div>
+                
+                </div>
                 <div>
-                  <p className='text-6xl'> {historyData?.forecast.forecastday[0].day.avgtemp_c}</p>
-                  <p> {historyData?.forecast.forecastday[0].day.mintemp_c}/{historyData?.forecast.forecastday[0].day.maxtemp_c}</p>
+                  <img src={`https:${historyData?.forecast.forecastday[0].day.condition.icon}`} alt={historyData?.forecast.forecastday[0].day.condition.text} className='h-20 w-24'/>
+                  <p className=' text-xs'> {historyData?.forecast.forecastday[0].day.condition.text}</p>
                 </div>
-                <div className='flex flex-col justify-between'>
-                  <p>°C</p>
-                  <p className='mt-auto mb-10 ml-2'>{historyData?.forecast.forecastday[0].day.avgtemp_f}°F</p>
+              </div>
+              <div className='flex flex-row mx-3 text-xs gap-x-4 mt-2 mb-3 md:mx-16'>
+                <div>
+                  <p>Rain: {historyData?.forecast.forecastday[0].day.daily_chance_of_rain}%</p>  
+                  <p>Wind: {historyData?.forecast.forecastday[0].day.maxwind_kph} kph/{historyData?.forecast.forecastday[0].day.maxwind_mph} mph</p>
                 </div>
-              
+                <div>
+                  <p>Avg Humidity: {historyData?.forecast.forecastday[0].day.avghumidity}%</p>
+                </div>
               </div>
-              <div>
-                <img src={`https:${historyData?.forecast.forecastday[0].day.condition.icon}`} alt={historyData?.forecast.forecastday[0].day.condition.text} className='h-20 w-24'/>
-                <p className=' text-xs'> {historyData?.forecast.forecastday[0].day.condition.text}</p>
-              </div>
+              <HourlyGraph i={0} Weather={historyData!} />
             </div>
-            <div className='flex flex-row mx-3 text-xs gap-x-4 mt-2 mb-3 md:mx-16'>
-              <div>
-                <p>Rain: {historyData?.forecast.forecastday[0].day.daily_chance_of_rain}%</p>  
-                <p>Wind: {historyData?.forecast.forecastday[0].day.maxwind_kph} kph/{historyData?.forecast.forecastday[0].day.maxwind_mph} mph</p>
-              </div>
-              <div>
-                <p>Avg Humidity: {historyData?.forecast.forecastday[0].day.avghumidity}%</p>
-              </div>
-            </div>
-            <HourlyGraph i={0} Weather={historyData!} />
-
-
-          </div>
           ) : (
             <div>
               <p className='mx-3 md:mx-16 my-4'>{curForWeather?.forecast.forecastday[selectedCard!.whichForcastDay-1].date}</p>
@@ -391,18 +374,11 @@ const Weather: React.FC<WeatherProps> = ({ location}): React.ReactElement  => {
               </div>
               {/* //Show Hourly GRAPH HERE */}
               {/* {hourlyArray= curForWeather?.forecast.forecastday[selectedCard!.whichForcastDay - 1].hour.map((hourData) =>  hourData.condition.icon */}
-              {/* )
-              } */}
               <HourlyGraph i={(selectedCard!.whichForcastDay-1)} Weather={curForWeather!} />
-              {/* <HourlyGraph i={5} curForWeather={curForWeather} /> */}
             </div>
           )}
         </div>
       )}
-
-
-     
-
     </div>
   );
 };
