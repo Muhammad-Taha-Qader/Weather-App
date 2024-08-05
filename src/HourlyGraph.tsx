@@ -26,7 +26,8 @@ const HourlyGraph: React.FC<HourlyGraphProps> = ({ i, Weather }) => {
       {
         label: 'Temperature (°C)',
         data: hourlyArray,
-        borderColor: 'rgba(75, 192, 192, 1)',
+        // borderColor: 'rgba(162, 25, 255, 1)',
+        borderColor: 'rgba(104,88,245, 1)',
         backgroundColor: 'rgba(75, 192, 192, 0.2)',
         borderWidth: 2,
         fill: true,
@@ -66,7 +67,7 @@ const HourlyGraph: React.FC<HourlyGraphProps> = ({ i, Weather }) => {
   };
 
   return (
-    <div className="w-full overflow-x-auto" style={{ height: '180px' }}>
+    <div className="w-full overflow-x-auto" style={{ height: '180px' }} id='graph'>
       <div className="w-[2400px] md:w-[1200px] h-full">
         <Line data={data} options={options} />
       </div>

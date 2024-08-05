@@ -3,7 +3,47 @@
 @tailwind utilities;
 
 
-html{
-  @apply bg-slate-800 text-slate-100 font-poppins;
+html {
+  @apply bg-slate-900 text-slate-100 font-poppins;
 }
- 
+
+
+/* Customize the scrollbar for WebKit-based browsers (Chrome, Safari) */
+#graph {
+  overflow-x: scroll; /* Ensure the element is scrollable horizontally */
+  background-color: transparent; /* Transparent background for the scrollable area */
+}
+
+#graph ::-webkit-scrollbar {
+  height: 7px; /* Set the height of the scrollbar for horizontal scroll */
+  width: 7px;  /* Set the width of the scrollbar for vertical scroll */
+}
+
+#graph ::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.731); /* Set the color of the scrollbar thumb */
+  border-radius: 10px; /* Round the corners of the scrollbar thumb */
+}
+
+#graph ::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.88); /* Set the color of the scrollbar thumb on hover */
+}
+
+/* Customize the scrollbar for Firefox */
+#graph {
+  scrollbar-color: rgba(255, 255, 255, 0.794) transparent; /* Set the color of the scrollbar thumb and track */
+  scrollbar-width: thin; /* Set the width of the scrollbar */
+}
+
+/* Customize the scrollbar for Edge and IE */
+#graph {
+  -ms-overflow-style: -ms-autohiding-scrollbar; /* Edge and IE specific styling */
+}
+
+#graph::-ms-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.778);
+  border-radius: 10px;
+}
+
+#graph::-ms-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.88);
+}
