@@ -38,7 +38,7 @@ const Location = ({onTogal})=>{
     <div className='flex justify-center md:justify-end md:mr-8'>
       <div>
         <label htmlFor="loc">Choose a Location:</label>
-        <select name="loc" id="loc" onChange={onTogal} className='text-slate-50 rounded-lg ml-3 px-2 mt-3 bg-white/25 focus:bg-sky-400/40 focus:text-slate-950'>
+        <select name="loc" id="loc" onChange={onTogal} className='text-slate-50 rounded-lg ml-3 px-2 mt-3 bg-white/25 focus:bg-slate-950 focus:text-slate-50'>
           {renderLocation()}
           {/* <option value="Lahore">Lahore</option>
           <option value="Paris">Paris</option>
