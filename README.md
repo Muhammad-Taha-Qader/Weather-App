@@ -81,6 +81,7 @@ A simple and robust weather app.
       @tailwind base;
       @tailwind components;
       @tailwind utilities;
-     ```
+      ```
+
 -  ``` npm install react-router-dom ```
 -  ``` npm install chart.js react-chartjs-2 ```
